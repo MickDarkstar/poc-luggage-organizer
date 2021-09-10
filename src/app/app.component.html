@@ -1,0 +1,48 @@
+<div class="person-container">
+	<label for="name">Kollin/person: </label>
+	<input id="name" form-control="antalKollin" placeholder="Antal Kollin" type="text" [(ngModel)]="thresholdPersonItemCount">
+	<label for="name">Handbaggage och vikt/person: </label>
+	<input id="name" placeholder="Antal Handbagage" type="text" [(ngModel)]="thresholdPersonHandLuggageCount">
+	<input id="name" placeholder="Total vikt Handbagage" type="text" [(ngModel)]="thresholdHandLuggageTotalMaxWeight">
+	<label for="name">Resväska/person: </label>
+	<input id="name" placeholder="Resväska per person" type="text" [(ngModel)]="thresholdLuggagePerPerson">
+	<input id="name" placeholder="Vikt per Resväska" type="text" [(ngModel)]="thresholhLuggagePerPersonMaxWeight">
+	<label for="name">Special baggage/person: </label>
+	<input id="name" placeholder="Special Baggage" type="text" [(ngModel)]="thresholdSpecialLuggagePerPerson">
+	<input id="name" placeholder="Vikt per Special Baggage " type="text" [(ngModel)]="thresholdSpecialLuggagePerPersonMaxWeight">
+	<button class="sticky-button" type="submit" (click)="verify()">Kontrollera</button>
+</div>
+
+<div cdkDropListGroup>
+
+	<div class="items-container">
+		<h2>Kollin</h2>
+
+		<div cdkDropList [cdkDropListData]="items" class="app-list" (cdkDropListDropped)="drop($event)">
+			<div class="app-box" *ngFor="let item of items" cdkDrag>
+				<span>#{{ item.number }}</span>
+				{{ item.name}}
+				<span>{{ item.weight }} kg</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="person-container">
+		<div *ngFor="let person of persons">
+			<div>
+				<h3>{{ person.name }}</h3>
+				Vikt: {{ sumWeightPersonItems(person) }} kg<span>, Handbaggage: {{ countPersonHandluggage(person) }}, Kollin: {{ countPersonItems(person) }} st
+        </span>
+			</div>
+
+			<div cdkDropList [cdkDropListData]="person.items" class="app-list" (cdkDropListDropped)="drop($event)">
+				<div class="app-box" *ngFor="let item of person.items" cdkDrag>
+					<span>#{{ item.number }}</span>
+					{{ item.name}}
+					<span>{{ item.weight }} kg</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
